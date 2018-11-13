@@ -10,6 +10,15 @@ Requirements for attendance:
 * Check that every package loads without error (e.g. `library(stm)`) as you might need to reinstall some other package;
 * The day before the session, download the entire repository of the session materials from [GitHub](https://github.com/Digital-Methods-Sydney/ws-201808/archive/master.zip) to have the most recent version of the scripts and data.
 
+Suggested readings:
+
+* Munksgaard, R., & Demant, J. (2016). Mixing politics and crime – The prevalence and decline of political discourse on the cryptomarket. International Journal of Drug Policy, 35, 77–83. https://doi.org/10.1016/j.drugpo.2016.04.021
+* Roberts, M., Stewart, B., & Tingley, D. (10000). stm: R Package for Structural Topic Models. Journal of Statistical Software. https://doi.org/10.18637
+* [Robinson, J. S. D. (2017). *Text mining with R: A tidy approach*. Sebastopol, CA: O’Reilly.](https://www.tidytextmining.com/)
+* Welbers, K., Van Atteveldt, W., & Benoit, K. (2017). Text analysis in R. Communication Methods and Measures, 11(4), 245–265. https://doi.org/10.1080/19312458.2017.1387238
+* Wickham, H., & Grolemund, G. (2017). R for data science. Sebastopol, CA: O’Reilly.
+
+
 ## Program
 
 ### 9-10.30 Block 1: Preparing your text
