@@ -1,0 +1,15 @@
+div.my-footer {
+    background-color: #FAFAFA;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    width: 100%;
+}
+div.my-footer span {
+    font-size: 10pt;
+    color: #1A292C;
+    position: absolute;
+    left: 15px;
+    bottom: 2px;
+}

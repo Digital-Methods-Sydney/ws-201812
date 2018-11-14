@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Topic models in R</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Francesco Bailo (francesco.bailo@sydney.edu.au)" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="footer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Topic models in R
+### Francesco Bailo (<a href="mailto:francesco.bailo@sydney.edu.au">francesco.bailo@sydney.edu.au</a>)
+### 5 December 2018 (updated: 14 November 2018)
+
+---
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;&lt;span&gt;@FrBailo    
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
+&lt;a href = "mailto:francesco.bailo@sydney.edu.au"&gt;francesco.bailo@sydney.edu.au&lt;/a&gt;&lt;/span&gt;&lt;/div&gt; 
+
+
+
+---
+class: center, middle
+
+Digital Methods @ The University of Sydney
+
+&lt;img src="https://github.com/Digital-Methods-Sydney/ws-201806/raw/master/img/digital-methods-logo.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+**Code** and **Data** is available [here](https://github.com/Digital-Methods-Sydney/ws-201806). 
+
+---
+# Setting up
+
+If you are using [RStudio](https://www.rstudio.com/products/rstudio/#Desktop) (and you should!), download the zip archive of the entire repository ([github.com/Digital-Methods-Sydney/ws-201812/archive/master.zip](https://github.com/Digital-Methods-Sydney/ws-201812/archive/master.zip)), uncompress the archive file `ws-201808-master.zip` and open `ws-201812.Rproj` with RStudio to load the project.
+
+You can open the R scripts by navigating the project folders in the **FILES** region of RStudio.
+
+&lt;img src="img/rstudio-ui.svg" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Importing
+
+Let's first import some textual data into R from PDFs, webpages and XML documents and an API.
+
+1. `script/01-importing/import_pdf.R`
+
+
+---
+
+# Cleaning
+
+---
+
+# Preparing
+
+---
+
+# Modelling
+
+---
+
+# Evaluating
+
+---
+
+# Visualising
+
+---
+
+# Reporting
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

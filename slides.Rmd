@@ -1,0 +1,79 @@
+---
+title: "Topic models in R"
+author: "Francesco Bailo (francesco.bailo@sydney.edu.au)"
+date: "5 December 2018 (updated: `r format(Sys.Date(), '%d %B %Y')`)"
+output:
+  xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts, "footer.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+layout: true
+  
+<div class="my-footer"><span>@FrBailo    
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+<a href = "mailto:francesco.bailo@sydney.edu.au">francesco.bailo@sydney.edu.au</a></span></div> 
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+---
+class: center, middle
+
+Digital Methods @ The University of Sydney
+
+```{r, out.width='45%', fig.align='center', echo = FALSE}
+knitr::include_graphics('https://github.com/Digital-Methods-Sydney/ws-201806/raw/master/img/digital-methods-logo.png')
+```
+
+**Code** and **Data** is available [here](https://github.com/Digital-Methods-Sydney/ws-201806). 
+
+---
+# Setting up
+
+If you are using [RStudio](https://www.rstudio.com/products/rstudio/#Desktop) (and you should!), download the zip archive of the entire repository ([github.com/Digital-Methods-Sydney/ws-201812/archive/master.zip](https://github.com/Digital-Methods-Sydney/ws-201812/archive/master.zip)), uncompress the archive file `ws-201808-master.zip` and open `ws-201812.Rproj` with RStudio to load the project.
+
+You can open the R scripts by navigating the project folders in the **FILES** region of RStudio.
+
+```{r, out.width='65%', fig.align='center', echo = FALSE}
+knitr::include_graphics('img/rstudio-ui.svg')
+```
+
+---
+
+# Importing
+
+Let's first import some textual data into R from PDFs, webpages and XML documents and an API.
+
+1. `script/01-importing/import_pdf.R`
+
+
+---
+
+# Cleaning
+
+---
+
+# Preparing
+
+---
+
+# Modelling
+
+---
+
+# Evaluating
+
+---
+
+# Visualising
+
+---
+
+# Reporting
