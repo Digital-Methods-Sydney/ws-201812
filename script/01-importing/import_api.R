@@ -14,7 +14,9 @@ g_books <-
   gutenberg_download(res$gutenberg_id, meta_fields = 'title')
 
 ## Wikipedia API
-'http://en.wikipedia.org/w/api.php?action=query&prop=revisions&titles=New_York_Yankees&rvprop=timestamp|user|comment|content'
+library(jsonlite)
+res <- 
+  fromJSON('http://en.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza')
 
 
 ## BONUS: Word-cloud

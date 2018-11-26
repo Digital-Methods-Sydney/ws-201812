@@ -43,7 +43,7 @@ In this workshop we will use a number of packages. Make sure that you have all t
 ws_packages <- 
   c('stm', 'tidyverse', 'tidytext', 'tidytext',
     'xml2', 'pdftools', 'stringr', 'aRxiv',
-    'gutenbergr')
+    'gutenbergr', 'jsonlite')
 ```
 
 ```{r, eval=F}
