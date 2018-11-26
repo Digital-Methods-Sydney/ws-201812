@@ -56,7 +56,7 @@ text and click on “Run” button, at the top of the **CODE** region.
 
 ![RStudio](img/open-file-execute-line.gif)
 
-## [Packages you need to install](#packages)
+## \[Packages you need to install\]
 
 In this workshop we will use a number of packages. Make sure that you
 have all the packages installed before attending the worksops by running
