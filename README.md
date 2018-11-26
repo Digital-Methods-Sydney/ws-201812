@@ -4,9 +4,8 @@ Topic models allow you to find topics and relationship among documents in large 
 
 * Bring your own laptop;
 * Preinstall [R](https://cran.r-project.org/mirrors.html) and [RStudio](https://www.rstudio.com/products/rstudio/#Desktop);
-* Install the R packages `stm`, `tidyverse`, `tidytext` and `quanteda` with the command `install.packages(c('stm', 'tidyverse', 'tidytext', 'tidytext'))`;
-* Check that every package loads without error (e.g. `library(stm)`) as you might need to reinstall some other package;
-* The day before the session, download the entire repository of the session materials from [GitHub](https://github.com/Digital-Methods-Sydney/ws-201808/archive/master.zip) to have the most recent version of the scripts and data, uncompress the archive file `ws-201808-master.zip` and open `ws-201812.Rproj` with RStudio to load the project.
+* Make sure you have installed all the packages listed here [getting-started page](getting_started.md);
+* The day before the session, download the entire repository of the session materials from [GitHub](https://github.com/Digital-Methods-Sydney/ws-201812/archive/master.zip) to have the most recent version of the scripts and data, uncompress the archive file `ws-201812-master.zip` and open `ws-201812.Rproj` with RStudio to load the project.
 
 ### Suggested readings
 

@@ -43,6 +43,8 @@ for (i in 1:nrow(place_names.df)) {
     xml_attr(xml_find_all(this_rdf, './/gn:featureClass'), 'resource')
 }
 
+# save(place_names.df, file = 'data/xml/place_names.df.RData')
+
 table(place_names.df$class)
 
 place_names.df$type <- 

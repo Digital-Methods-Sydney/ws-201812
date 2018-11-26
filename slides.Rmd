@@ -52,6 +52,10 @@ knitr::include_graphics('img/rstudio-ui.svg')
 Let's first import some textual data into R from PDFs, webpages and XML documents and an API.
 
 1. `script/01-importing/import_pdf.R`
+2. `script/01-importing/import_html.R`
+3. `script/01-importing/import_xml.R`
+4. `script/01-importing/import_api.R`
+
 
 
 ---
