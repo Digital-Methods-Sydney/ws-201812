@@ -65,12 +65,77 @@ these two chunks of code:
 ``` r
 ws_packages <- 
   c('stm', 'tidyverse', 'tidytext', 'tidytext',
-    'xml2', 'pdftools', 'stringr', 'WikipediaR')
+    'xml2', 'pdftools', 'stringr', 'aRxiv',
+    'gutenbergr')
 ```
 
 ``` r
-install.packages(ws_packages)
+install.packages(ws_packages, dependencies = TRUE)
 ```
 
 To run the code, just copy-paste the code into your RStudio **CONSOLE**
 and hit the Return/Enter Key.
+
+Finally to test that all packages load correctly run this (and checks if
+return only a list of `TRUE`s):
+
+``` r
+lapply(ws_packages, require, character.only = TRUE)
+```
+
+    ## Loading required package: stm
+
+    ## stm v1.3.3 (2018-1-26) successfully loaded. See ?stm for help. 
+    ##  Papers, resources, and other materials at structuraltopicmodel.com
+
+    ## Loading required package: tidyverse
+
+    ## ── Attaching packages ─────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+
+    ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+    ## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
+    ## ✔ tidyr   0.8.1     ✔ stringr 1.3.1
+    ## ✔ readr   1.1.1     ✔ forcats 0.3.0
+
+    ## Warning: package 'dplyr' was built under R version 3.5.1
+
+    ## ── Conflicts ────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+
+    ## Loading required package: tidytext
+
+    ## Loading required package: xml2
+
+    ## Loading required package: pdftools
+
+    ## Loading required package: aRxiv
+
+    ## Loading required package: gutenbergr
+
+    ## [[1]]
+    ## [1] TRUE
+    ## 
+    ## [[2]]
+    ## [1] TRUE
+    ## 
+    ## [[3]]
+    ## [1] TRUE
+    ## 
+    ## [[4]]
+    ## [1] TRUE
+    ## 
+    ## [[5]]
+    ## [1] TRUE
+    ## 
+    ## [[6]]
+    ## [1] TRUE
+    ## 
+    ## [[7]]
+    ## [1] TRUE
+    ## 
+    ## [[8]]
+    ## [1] TRUE
+    ## 
+    ## [[9]]
+    ## [1] TRUE

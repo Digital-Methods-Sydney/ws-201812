@@ -42,11 +42,20 @@ In this workshop we will use a number of packages. Make sure that you have all t
 ```{r packages}
 ws_packages <- 
   c('stm', 'tidyverse', 'tidytext', 'tidytext',
-    'xml2', 'pdftools', 'stringr', 'WikipediaR')
+    'xml2', 'pdftools', 'stringr', 'aRxiv',
+    'gutenbergr')
 ```
 
 ```{r, eval=F}
-install.packages(ws_packages)
+install.packages(ws_packages, dependencies = TRUE)
 ```
 
 To run the code, just copy-paste the code into your RStudio **CONSOLE** and hit the Return/Enter Key.
+
+Finally to test that all packages load correctly run this (and checks if return only a list of `TRUE`s):
+
+```{r}
+lapply(ws_packages, require, character.only = TRUE)
+```
+
+
