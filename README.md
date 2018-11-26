@@ -4,7 +4,7 @@ Topic models allow you to find topics and relationship among documents in large 
 
 * Bring your own laptop;
 * Preinstall [R](https://cran.r-project.org/mirrors.html) and [RStudio](https://www.rstudio.com/products/rstudio/#Desktop);
-* Make sure you have installed all the packages listed [here](getting_started.md#packages);
+* Make sure you have installed all the packages listed [here](getting_started.md#packages-you-need-to-install);
 * The day before the session, download the entire repository of the session materials from [GitHub](https://github.com/Digital-Methods-Sydney/ws-201812/archive/master.zip) to have the most recent version of the scripts and data, uncompress the archive file `ws-201812-master.zip` and open `ws-201812.Rproj` with RStudio to load the project.
 
 ### Suggested readings
