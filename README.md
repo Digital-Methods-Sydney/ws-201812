@@ -19,6 +19,9 @@ Topic models allow you to find topics and relationship among documents in large 
 
 * Manning, C. D., Raghavan, P., & Schütze, H. (2008). *Introduction to information retrieval*. New York, NY: Cambridge University Press. [nlp.stanford.edu/IR-book](https://nlp.stanford.edu/IR-book/)
 
+### Data used in the workshop
+
+See [data/data.md](here)
 
 ## Program
 
@@ -37,3 +40,6 @@ University of Sydney
 ## Contacts
 
 francesco.bailo@sydney.edu.au | +61 2 8627 6895
+
+
+
