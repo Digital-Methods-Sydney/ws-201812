@@ -21,7 +21,7 @@ Topic models allow you to find topics and relationship among documents in large 
 
 ### Data used in the workshop
 
-See [here](data/data.md)
+See [here](data/README.md).
 
 ## Program
 
