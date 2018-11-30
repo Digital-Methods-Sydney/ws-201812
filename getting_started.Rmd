@@ -47,7 +47,7 @@ ws_packages <-
 ```
 
 ```{r, eval=F}
-install.packages(ws_packages, dependencies = TRUE)
+install.packages(ws_packages)
 ```
 
 To run the code, just copy-paste the code into your RStudio **CONSOLE** and hit the Return/Enter Key.

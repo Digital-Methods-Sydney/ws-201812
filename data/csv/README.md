@@ -12,7 +12,7 @@ Keywords: datasets, social media
 
 Title |Posts |URL
 ---|---|---|
-American Thinker (at) |3197 | http://www. americanthinker.com
+American Thinker (at) |3197 | http://www.americanthinker.com
 Digby (db) | 1879 | http://digbysblog.blogspot.com
 Hot Air (ha) | 3708 | http://hotair.com
 Michelle Malkin (mm) | 677 | http://michallemalkin.com

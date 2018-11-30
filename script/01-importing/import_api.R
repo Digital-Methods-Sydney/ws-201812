@@ -1,3 +1,5 @@
+library(tidyverse)
+
 # This package provides an interface to the arXiv API (see https://arxiv.org/help/api/index)
 library(aRxiv)
 res <- 
@@ -6,12 +8,21 @@ res <-
 # This package provides an interface to the arXiv API (see https://arxiv.org/help/api/index)
 library(gutenbergr)
 
-## This won't download the actual book but the metadata, to download the book
+## This won't download the actual book but the metadata
 res <-
   gutenberg_works(author == "Dick, Philip K.")
-## This will
+## This will download the book data
 g_books <-
   gutenberg_download(res$gutenberg_id, meta_fields = 'title')
+
+## Let's download two books we will use later
+titles <- c("Twenty Thousand Leagues under the Sea", 
+            "Frankenstein; Or, The Modern Prometheus",
+            "Alice's Adventures in Wonderland",
+            "Adventures of Huckleberry Finn")
+g_books <-
+  gutenberg_works(title %in% titles) %>%
+  gutenberg_download(meta_fields = "title")
 
 ## Wikipedia API
 library(jsonlite)

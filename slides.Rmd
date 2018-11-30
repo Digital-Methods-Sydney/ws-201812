@@ -32,7 +32,7 @@ Digital Methods @ The University of Sydney
 knitr::include_graphics('https://github.com/Digital-Methods-Sydney/ws-201806/raw/master/img/digital-methods-logo.png')
 ```
 
-**Code** and **Data** is available [here](https://github.com/Digital-Methods-Sydney/ws-201806). 
+**Code** and **Data** are available [here](https://github.com/Digital-Methods-Sydney/ws-201806). 
 
 ---
 # Setting up
@@ -56,7 +56,22 @@ Let's first import some textual data into R from PDFs, webpages and XML document
 3. `script/01-importing/import_xml.R`
 4. `script/01-importing/import_api.R`
 
+---
 
+# APIs
+
+An API (or **A**pplication **P**rogramming **I**nterface) makes it easier for a computer to communicate with another computer. Many public web APIs are available: they offer programmatic access to data resources of an enterprise. For example, the research on large Facebook and Twitter datasets is usually conducted on data collected after a request to the Facebook API (graph.facebook.com) and the Twitter API (api.twitter.com).
+
+Wikipedia also has a [public API](http://en.wikipedia.org/w/api.php). And we can submit a request by concatenating different options in a single string (which you can actually enter into the address bar of your browser).
+
+---
+
+# APIs
+
+|-|-|
+http://en.wikipedia.org/w/api.php? 
+format=json&action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza
+```
 
 ---
 
