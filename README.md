@@ -33,7 +33,7 @@ See [here](data/README.md).
 
 ## Location
 
-[Oriental Room S204](https://studentvip.com.au/usyd/main/maps/113286), The Quadrangle,, University of Sydney
+[Oriental Room S204](https://studentvip.com.au/usyd/main/maps/113286), The Quadrangle, University of Sydney
 
 ![venue](img/venue.png)
 
