@@ -19,7 +19,7 @@ g_books <-
 titles <- c("Twenty Thousand Leagues under the Sea", 
             "Frankenstein; Or, The Modern Prometheus",
             "Alice's Adventures in Wonderland",
-            "Adventures of Huckleberry Finn")
+            "Pride and Prejudice")
 g_books <-
   gutenberg_works(title %in% titles) %>%
   gutenberg_download(meta_fields = "title")

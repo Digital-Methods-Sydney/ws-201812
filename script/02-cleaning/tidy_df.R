@@ -34,25 +34,6 @@ by_chapter %>%
   summarize(n_chapters = n(),
             avg_words_by_chapter = mean(words_by_chapter))
 
-# Remove table of contents in Huckleberry Finn
-by_chapter <- 
-  by_chapter %>%
-  filter(!(title == 'Adventures of Huckleberry Finn' &
-           chapter %in% 1:43)) %>%
-  group_by(title) %>%
-  arrange(chapter) %>%
-  mutate(chapter = 1:n()) %>%
-  arrange(title, chapter)
-
-# Same as before
-by_chapter %>% 
-  group_by(title, chapter) %>%
-  summarize(words_by_chapter = str_count(paste(text, collapse = " "), reg)) %>%
-  ungroup() %>%
-  group_by(title) %>%
-  summarize(n_chapters = n(),
-            avg_words_by_chapter = mean(words_by_chapter))
-
 library(tidytext)
 # split into words
 by_chapter_word <- by_chapter %>%
@@ -65,8 +46,8 @@ by_chapter_bigram <- by_chapter %>%
 # find document-word counts
 word_counts <- by_chapter_word %>%
   anti_join(stop_words) %>%
-  filter(!is.na(word)) %>%
   mutate(word = str_extract(word, "[a-z']+")) %>%
+  filter(!is.na(word)) %>%
   count(title, word, sort = TRUE) %>%
   ungroup()
 
@@ -75,9 +56,9 @@ word_counts %>%
   top_n(10, n) %>%
   ungroup() %>%
   mutate(word = reorder(word, n)) %>%
-ggplot(aes(word, n)) +
+ggplot(aes(word, n, fill=title)) +
   geom_col(show.legend = FALSE) +
-  facet_wrap(~title, scales = "free_y") +
+  facet_wrap(~title, scales = "free") +
   labs(y = "10 most frequent words",
        x = NULL) +
   coord_flip()
@@ -108,10 +89,10 @@ bigram_counts %>%
   top_n(10, n) %>%
   ungroup() %>%
   mutate(bigram = reorder(bigram, n)) %>%
-  ggplot(aes(bigram, n)) +
+  ggplot(aes(bigram, n, fill=title)) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~title, scales = "free") +
-  labs(y = "10 most frequent bigrams",
+  labs(y = "10 most frequent bigrams by book",
        x = NULL) +
   coord_flip()
 
