@@ -4,4 +4,4 @@
 * <a href="" target="_blank">Live polls</a>
 * <a href="http://collabedit.com/y56w6" target="_blank">Collaborative text editor and chat</a>
 
-<p style = "font-size: 450%;" align="center">To reach this page visit https://bit.ly/2rigdVh<p>
+<p style = "font-size: 450%;" align="center">To reach this page visit bit.ly/2rigdVh<p>
