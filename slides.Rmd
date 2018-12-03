@@ -22,6 +22,7 @@ layout: true
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 library(tidyverse)
+library(kableExtra)
 ```
 
 ---
@@ -45,6 +46,94 @@ You can open the R scripts by navigating the project folders in the **FILES** re
 ```{r, out.width='65%', fig.align='center', echo = FALSE}
 knitr::include_graphics('img/rstudio-ui.svg')
 ```
+
+---
+
+# Getting to know each other: a Quiz
+
+1. Visit socrative.com
+2. Login as `student` in the room `TOPICMODELS`.
+3. Respond to the first question:
+
+**In R, how do you get the column names of a data frame called "dataset"?**
+
+---
+
+# A one-slide introduction to 
+
+```{r, out.width='15%', fig.align='center', echo = FALSE}
+knitr::include_graphics('img/r_logo.svg')
+```
+
+R is an *object-oriented* programming language. This means that everything in a R is an **object**. 
+
+Most of the objects can be broadly categorised either as
+* **Values** (or variables) `my_data <- 6`, or as 
+* **Functions** `my_function <- function(data){data + 1}`.
+
+Each values is an object of a specific *class*. 
+
+```{r}
+my_data <- 6
+class(my_data)
+```
+
+**Functions** accept objects of some *class* and return objects of some (but not necessary the same) *class*. 
+
+---
+
+# A one-slide introduction to the tidy data in R
+
+Accordingly (see [tidyr.tidyverse.org](https://tidyr.tidyverse.org/)),
+
+```{r, echo=FALSE}
+not_tidy_data <- 
+  tibble(country = c('A', 'B', 'C'),
+         `1999` = c('0.7K', '37K', '212K'),
+         `2000` = c('2K', '80K', '213K'))
+```
+
+
+```{r, echo=F}
+kable(gather(not_tidy_data, "1999", "2000", key="year", value="cases"), caption = 'Tidy data') %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "float_right")
+
+kable(not_tidy_data, caption = 'Not tidy data', format = 'html') %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "float_right")
+```
+
+
+> Tidy data is data where:
+> 
+> 1. Each variable is in a column.
+> 2. Each observation is a row.
+> 3. Each value is a cell.
+
+---
+# magrittr: Simplifying R code with pipes
+
+```{r, echo=F}
+kable(iris[1:3,])
+```
+
+```{r}
+iris %>%
+  group_by(Species) %>%
+  summarize(Average.Petal.Length = mean(Petal.Length))
+```
+
+```{r, out.width='15%', fig.align='center', echo = FALSE}
+knitr::include_graphics('img/magritte-pipe.svg')
+# Artwork by dan lowenstein, IL
+```
+
+---
+# Text analysis in R: Workflow
+
+1. Import your data
+2. Tidy your data
+3. Model your data
+4. Present your results
 
 ---
 

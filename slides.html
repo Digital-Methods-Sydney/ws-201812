@@ -7,6 +7,7 @@
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
     <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
     <link rel="stylesheet" href="footer.css" type="text/css" />
   </head>
   <body>
@@ -15,7 +16,7 @@ class: center, middle, inverse, title-slide
 
 # Topic models in R
 ### Francesco Bailo (<a href="mailto:francesco.bailo@sydney.edu.au">francesco.bailo@sydney.edu.au</a>)
-### 5 December 2018 (updated: 03 December 2018)
+### 5 December 2018 (updated: 04 December 2018)
 
 ---
 
@@ -46,6 +47,193 @@ If you are using [RStudio](https://www.rstudio.com/products/rstudio/#Desktop) (a
 You can open the R scripts by navigating the project folders in the **FILES** region of RStudio.
 
 &lt;img src="img/rstudio-ui.svg" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Getting to know each other: a Quiz
+
+1. Visit socrative.com
+2. Login as `student` in the room `TOPICMODELS`.
+3. Respond to the first question:
+
+**In R, how do you get the column names of a data frame called "dataset"?**
+
+---
+
+# A one-slide introduction to 
+
+&lt;img src="img/r_logo.svg" width="15%" style="display: block; margin: auto;" /&gt;
+
+R is an *object-oriented* programming language. This means that everything in a R is an **object**. 
+
+Most of the objects can be broadly categorised either as
+* **Values** (or variables) `my_data &lt;- 6`, or as 
+* **Functions** `my_function &lt;- function(data){data + 1}`.
+
+Each values is an object of a specific *class*. 
+
+
+```r
+my_data &lt;- 6
+class(my_data)
+```
+
+```
+## [1] "numeric"
+```
+
+**Functions** accept objects of some *class* and return objects of some (but not necessary the same) *class*. 
+
+---
+
+# A one-slide introduction to the tidy data in R
+
+Accordingly (see [tidyr.tidyverse.org](https://tidyr.tidyverse.org/)),
+
+
+
+
+&lt;table class="table table-striped" style="width: auto !important; float: right; margin-left: 10px;"&gt;
+&lt;caption&gt;Tidy data&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; year &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; cases &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.7K &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 37K &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1999 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 212K &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2K &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80K &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2000 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 213K &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table class="table table-striped" style="width: auto !important; float: right; margin-left: 10px;"&gt;
+&lt;caption&gt;Not tidy data&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 1999 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; 2000 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0.7K &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2K &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 37K &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80K &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 212K &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 213K &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+&gt; Tidy data is data where:
+&gt; 
+&gt; 1. Each variable is in a column.
+&gt; 2. Each observation is a row.
+&gt; 3. Each value is a cell.
+
+---
+# magrittr: Simplifying R code with pipes
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; Sepal.Length &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Sepal.Width &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Petal.Length &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Petal.Width &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Species &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5.1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4.7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+```r
+iris %&gt;%
+  group_by(Species) %&gt;%
+  summarize(Average.Petal.Length = mean(Petal.Length))
+```
+
+```
+## # A tibble: 3 x 2
+##   Species    Average.Petal.Length
+##   &lt;fct&gt;                     &lt;dbl&gt;
+## 1 setosa                     1.46
+## 2 versicolor                 4.26
+## 3 virginica                  5.55
+```
+
+&lt;img src="img/magritte-pipe.svg" width="15%" style="display: block; margin: auto;" /&gt;
+
+---
+# Text analysis in R: Workflow
+
+1. Import your data
+2. Tidy your data
+3. Model your data
+4. Present your results
 
 ---
 
