@@ -13,7 +13,7 @@ output:
 ---
 
 layout: true
-  
+
 <div class="my-footer"><span>@FrBailo    
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -21,6 +21,7 @@ layout: true
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
+library(tidyverse)
 ```
 
 ---
@@ -68,10 +69,28 @@ Wikipedia also has a [public API](http://en.wikipedia.org/w/api.php). And we can
 
 # APIs
 
-|-|-|
-http://en.wikipedia.org/w/api.php? 
-format=json&action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza
+```{r echo = FALSE}
+api_tibble <- 
+  tibble(parameter = c("http://en.wikipedia.org/w/api.php?",
+                       "action=query",
+                       "&format=json",
+                       "&prop=revisions", 
+                       "&rvprop=content",
+                       "&rvsection=0",
+                       "&titles=pizza"),
+         description = c("Base URL",
+                         "Which action to perform",
+                         "The format of the output",
+                         "Which properties to get for the queried pages",
+                         "Which properties to get for each revision",
+                         "Only retrieve the content of this section number",
+                         "A list of titles to work on"))
+knitr::kable(api_tibble, format = "html")
 ```
+
+Ane let's concatenate everything together: 
+
+http://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&rvprop=content&rvsection=0&titles=pizza
 
 ---
 

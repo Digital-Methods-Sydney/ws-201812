@@ -15,13 +15,13 @@ class: center, middle, inverse, title-slide
 
 # Topic models in R
 ### Francesco Bailo (<a href="mailto:francesco.bailo@sydney.edu.au">francesco.bailo@sydney.edu.au</a>)
-### 5 December 2018 (updated: 28 November 2018)
+### 5 December 2018 (updated: 03 December 2018)
 
 ---
 
 
 layout: true
-  
+
 &lt;div class="my-footer"&gt;&lt;span&gt;@FrBailo    
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
 &amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;&amp;emsp;
@@ -60,9 +60,58 @@ Let's first import some textual data into R from PDFs, webpages and XML document
 
 ---
 
-# Wikipedia API
+# APIs
 
-An API (or **A**pplication **P**rogramming **I**nterface) makes it easier for a computer to communicate with another computer. Many public web APIs are available: they offer programmatic access to data resources of an enterprise. For example, the research on large Facebook and Twitter datasets is usually conducted on data queried via the Facebook API (`graph.facebook.com`) and the Twitter API (`api.twitter.com`).
+An API (or **A**pplication **P**rogramming **I**nterface) makes it easier for a computer to communicate with another computer. Many public web APIs are available: they offer programmatic access to data resources of an enterprise. For example, the research on large Facebook and Twitter datasets is usually conducted on data collected after a request to the Facebook API (graph.facebook.com) and the Twitter API (api.twitter.com).
+
+Wikipedia also has a [public API](http://en.wikipedia.org/w/api.php). And we can submit a request by concatenating different options in a single string (which you can actually enter into the address bar of your browser).
+
+---
+
+# APIs
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; parameter &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; description &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; http://en.wikipedia.org/w/api.php? &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Base URL &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; action=query &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Which action to perform &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;format=json &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; The format of the output &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;prop=revisions &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Which properties to get for the queried pages &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;rvprop=content &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Which properties to get for each revision &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;rvsection=0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Only retrieve the content of this section number &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &amp;amp;titles=pizza &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A list of titles to work on &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+Ane let's concatenate everything together: 
+
+http://en.wikipedia.org/w/api.php?action=query&amp;format=json&amp;prop=revisions&amp;rvprop=content&amp;rvsection=0&amp;titles=pizza
 
 ---
 
