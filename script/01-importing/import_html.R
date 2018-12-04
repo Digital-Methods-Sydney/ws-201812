@@ -1,3 +1,5 @@
+## ---- import_html1 ----
+
 library(rvest)
 library(tidyverse)
 library(stringr)
@@ -14,6 +16,8 @@ for (node in nodes) {
   article_url <- html_attr(node_a, 'href')
   article_urls <- c(article_url, article_urls)
 }
+
+## ---- import_html2 ----
 
 # Create a data.frame and store parts of the articles
 article_df <- data.frame()
@@ -36,6 +40,9 @@ for (article_url in article_urls) {
     html_node(article_page, xpath=".//h1[@itemprop='headline']") %>%
     html_text() %>%
     str_trim()
+  
+## ---- import_html3 ----
+  
   article_df <- 
     rbind(article_df, 
           data.frame(body, author, date, title,

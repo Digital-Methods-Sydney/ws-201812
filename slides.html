@@ -243,10 +243,220 @@ iris %&gt;%
 
 Let's first import some textual data into R from PDFs, webpages and XML documents and an API.
 
-1. `script/01-importing/import_pdf.R`
-2. `script/01-importing/import_html.R`
-3. `script/01-importing/import_xml.R`
-4. `script/01-importing/import_api.R`
+---
+
+# Import PDF
+
+
+```r
+read_chunk("script/01-importing/import_pdf.R")
+```
+
+
+```r
+library(pdftools)
+library(tidyverse)
+library(stringr)
+
+# List PDFs
+file_names &lt;- list.files("./data/pdf")
+
+# Loop over each file name and read into list
+texts_by_page &lt;- list()
+for (f in file_names) {
+  texts_by_page[[f]] &lt;- 
+    pdf_text(sprintf("./data/pdf/%s", f))
+}
+
+# Read each document into a character vector
+texts_by_document &lt;- character()
+for (f in file_names) {
+  texts_by_document[[f]] &lt;- 
+    str_c(texts_by_page[[f]] %&gt;% str_squish(), collapse = " ")
+}
+```
+
+---
+
+# Import HTML
+
+## Xpath
+
+&gt; XPath can be used to navigate through elements and attributes in an XML[-like] document (see [www.w3schools.com/xml/xml_xpath.asp](https://www.w3schools.com/xml/xml_xpath.asp)).
+
+
+```html
+&lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+    &lt;body&gt;
+  
+    &lt;h1&gt;My First Heading&lt;/h1&gt;
+  
+    &lt;div class='foo'&gt;&lt;p&gt;My first paragraph.&lt;/p&gt;&lt;/div&gt;
+  
+    &lt;/body&gt;
+  &lt;/html&gt;
+```
+
+This xpath `//div[@class='foo']/p` will get you this: `&lt;p&gt;My first paragraph.&lt;/p&gt;`. (And you can check this [here](http://xpather.com/A4yx3Gsx))
+
+---
+
+# Import HTML
+
+
+```r
+read_chunk("script/01-importing/import_html.R", from = 1, to = 18)
+```
+
+
+```r
+library(rvest)
+library(tidyverse)
+library(stringr)
+
+# Parse page containing articles published 26 nov 2018
+seed_url &lt;- 'https://www.theguardian.com/society/2018/nov/26'
+day_page &lt;- read_html(seed_url)
+nodes &lt;- html_nodes(day_page, xpath = './/div[@class="fc-item__content "]')
+
+# Loop
+article_urls &lt;- character()
+for (node in nodes) {
+  node_a &lt;- html_node(node, xpath = ".//a")
+  article_url &lt;- html_attr(node_a, 'href')
+  article_urls &lt;- c(article_url, article_urls)
+}
+```
+
+---
+
+# Import HTML
+
+
+```r
+# Create a data.frame and store parts of the articles
+article_df &lt;- data.frame()
+for (article_url in article_urls) {
+  article_page &lt;- 
+    read_html(article_url)
+  body &lt;- 
+    html_node(article_page, xpath=".//div[@itemprop='articleBody']") %&gt;%
+    html_text() %&gt;%
+    str_trim()
+  author &lt;- 
+    html_node(article_page, xpath=".//span[@itemprop='name']") %&gt;%
+    html_text() %&gt;%
+    str_trim()
+  date &lt;- 
+    html_node(article_page, xpath=".//time[@itemprop='datePublished']") %&gt;%
+    html_text() %&gt;%
+    str_trim()
+  title &lt;- 
+    html_node(article_page, xpath=".//h1[@itemprop='headline']") %&gt;%
+    html_text() %&gt;%
+    str_trim()
+```
+
+---
+
+# Import HTML
+
+
+```r
+  article_df &lt;- 
+    rbind(article_df, 
+          data.frame(body, author, date, title,
+                     stringsAsFactors = F))
+}
+```
+
+---
+
+# Exercise  
+
+---
+
+# Import XML
+
+
+```r
+read_chunk("script/01-importing/import_xml.R")
+```
+
+
+```r
+library(xml2) 
+library(tidyverse)
+
+# Read the document
+doc &lt;- 
+  read_xml('data/xml/apollinaire_heresiarque-et-cie-gold-geonames.xml',
+           encoding = "utf-8")
+
+# Identify the document namespace
+xml_ns(doc)
+
+# Find all place nodes `placeName`
+place_names &lt;-
+  xml_find_all(doc, 
+               ".//d1:placeName")
+
+# Extract attributes and names
+place_names.df &lt;-
+  data.frame(ref = xml_attr(place_names, "ref"),
+             name = xml_text(place_names),
+             stringsAsFactors = F)
+place_names.df &lt;- 
+  place_names.df %&gt;% group_by(ref, name) %&gt;% 
+  summarize(citations = n())
+
+# Enrich -- BONUS Linked data + SPARQL query
+place_names.df$class &lt;- NA
+place_names.df$long &lt;- NA
+place_names.df$lat &lt;- NA
+
+for (i in 1:nrow(place_names.df)) {
+  print(i)
+  if (is.na(place_names.df$ref[i]) | place_names.df$ref[i] == "") next
+  this_rdf &lt;- try({
+    read_xml(paste0(place_names.df$ref[i], "/about.rdf"))
+  })
+  if (class(this_rdf) == 'try-error') next
+  place_names.df$lat[i] &lt;- 
+    as.numeric(xml_text(xml_find_all(this_rdf, './/wgs84_pos:lat')))
+  place_names.df$long[i] &lt;- 
+    as.numeric(xml_text(xml_find_all(this_rdf, './/wgs84_pos:long')))
+  place_names.df$class[i] &lt;- 
+    xml_attr(xml_find_all(this_rdf, './/gn:featureClass'), 'resource')
+}
+
+# save(place_names.df, file = 'data/xml/place_names.df.RData')
+
+table(place_names.df$class)
+
+place_names.df$type &lt;- 
+  ifelse(grepl("#A|#L", place_names.df$class), "area", "point")
+
+library(leaflet) # See https://rstudio.github.io/leaflet/
+# Area
+leaflet(data = place_names.df[place_names.df$type=='area',]) %&gt;% 
+  addProviderTiles(providers$CartoDB.Positron) %&gt;%
+  addCircleMarkers(~long, ~lat, 
+                   radius = ~citations*4,
+                   color = 'red',
+                   stroke = FALSE, fillOpacity = 0.8,
+                   popup = ~as.character(name))
+
+# Point
+leaflet(data = place_names.df[place_names.df$type=='point',]) %&gt;% 
+  addProviderTiles(providers$CartoDB.Positron) %&gt;%
+  addCircleMarkers(~long, ~lat, 
+                   radius = ~citations*4,
+                   color = 'blue',
+                   stroke = FALSE, fillOpacity = 0.8,
+                   popup = ~as.character(name))
+```
 
 ---
 
@@ -302,6 +512,80 @@ Wikipedia also has a [public API](http://en.wikipedia.org/w/api.php). And we can
 Ane let's concatenate everything together: 
 
 http://en.wikipedia.org/w/api.php?action=query&amp;format=json&amp;prop=revisions&amp;rvprop=content&amp;rvsection=0&amp;titles=pizza
+
+---
+
+# Import API
+
+
+```r
+read_chunk("script/01-importing/import_api.R")
+```
+
+
+```r
+library(tidyverse)
+
+# This package provides an interface to the arXiv API (see https://arxiv.org/help/api/index)
+library(aRxiv)
+res &lt;- 
+  arxiv_search("topic models", limit = 100)
+
+# This package provides an interface to the arXiv API (see https://arxiv.org/help/api/index)
+library(gutenbergr)
+
+## This won't download the actual book but the metadata
+res &lt;-
+  gutenberg_works(author == "Dick, Philip K.")
+## This will download the book data
+g_books &lt;-
+  gutenberg_download(res$gutenberg_id, meta_fields = 'title')
+
+## Let's download two books we will use later
+titles &lt;- c("Twenty Thousand Leagues under the Sea", 
+            "Frankenstein; Or, The Modern Prometheus",
+            "Alice's Adventures in Wonderland",
+            "Pride and Prejudice")
+g_books &lt;-
+  gutenberg_works(title %in% titles) %&gt;%
+  gutenberg_download(meta_fields = "title")
+
+## Wikipedia API
+library(jsonlite)
+res &lt;- 
+  fromJSON('http://en.wikipedia.org/w/api.php?format=json&amp;action=query&amp;prop=revisions&amp;rvprop=content&amp;rvsection=0&amp;titles=pizza')
+
+
+## BONUS: Word-cloud
+library(tidyverse)
+library(tidytext)
+
+data(stop_words) # Let's load a list of stopwords from the `tidytext` package
+
+tidy_books &lt;- 
+  g_books %&gt;%
+  group_by(title) %&gt;%
+  unnest_tokens(word, text) %&gt;%
+  ungroup() %&gt;%
+  mutate(word = str_extract(word, "[a-zA-Z]+")) %&gt;%
+  anti_join(stop_words, by = 'word')
+nrow(tidy_books)
+
+tidy_books &lt;- 
+  tidy_books %&gt;%
+  group_by(title, word) %&gt;%
+  summarize(n = n())
+
+tidy_books %&gt;%
+  group_by(title) %&gt;%
+  top_n(10, n) %&gt;%
+  ungroup() %&gt;%
+  mutate(word = reorder(word, n)) %&gt;%
+  ggplot(aes(x=word, y=n)) +
+  geom_col() +
+  facet_wrap(~title, scales = "free") +
+  coord_flip()
+```
 
 ---
 

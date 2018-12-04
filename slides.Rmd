@@ -10,6 +10,7 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+
 ---
 
 layout: true
@@ -23,6 +24,7 @@ layout: true
 options(htmltools.dir.version = FALSE)
 library(tidyverse)
 library(kableExtra)
+library(knitr)
 ```
 
 ---
@@ -143,10 +145,86 @@ knitr::include_graphics('img/magritte-pipe.svg')
 
 Let's first import some textual data into R from PDFs, webpages and XML documents and an API.
 
-1. `script/01-importing/import_pdf.R`
-2. `script/01-importing/import_html.R`
-3. `script/01-importing/import_xml.R`
-4. `script/01-importing/import_api.R`
+---
+
+# Import PDF
+
+```{r}
+read_chunk("script/01-importing/import_pdf.R")
+```
+
+```{r import_pdf, eval = FALSE}
+
+```
+
+---
+
+# Import HTML
+
+## Xpath
+
+> XPath can be used to navigate through elements and attributes in an XML[-like] document (see [www.w3schools.com/xml/xml_xpath.asp](https://www.w3schools.com/xml/xml_xpath.asp)).
+
+```{html}
+<!DOCTYPE html>
+  <html>
+    <body>
+  
+    <h1>My First Heading</h1>
+  
+    <div class='foo'><p>My first paragraph.</p></div>
+  
+    </body>
+  </html>
+```
+
+The xpath `//div[@class='foo']/p` will get you this: `<p>My first paragraph.</p>`. (And you can check this [here](http://xpather.com/A4yx3Gsx))
+
+---
+
+# Import HTML
+
+```{r}
+read_chunk("script/01-importing/import_html.R", from = 1, to = 18)
+```
+
+```{r import_html1, eval = FALSE}
+
+```
+
+---
+
+# Import HTML
+
+```{r import_html2, eval = FALSE}
+
+```
+
+---
+
+# Import HTML
+
+```{r import_html3, eval = FALSE}
+
+```
+
+---
+
+# Hands-on
+
+Visit this page: [imdb.com/title/tt0057012/](https://imdb.com/title/tt0057012/)
+
+---
+
+# Import XML
+
+```{r}
+read_chunk("script/01-importing/import_xml.R")
+```
+
+```{r import_xml, eval = FALSE}
+
+```
 
 ---
 
@@ -182,6 +260,18 @@ knitr::kable(api_tibble, format = "html")
 Ane let's concatenate everything together: 
 
 http://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&rvprop=content&rvsection=0&titles=pizza
+
+---
+
+# Import API
+
+```{r}
+read_chunk("script/01-importing/import_api.R")
+```
+
+```{r import_api, eval = FALSE}
+
+```
 
 ---
 
