@@ -31,6 +31,8 @@ g_books <-
   gutenberg_works(title %in% titles) %>%
   gutenberg_download(meta_fields = "title")
 
+save(g_books, file = 'data/rdata/g_books.RData')
+
 ## ---- import_api3 ----
 
 ## BONUS: Word-cloud

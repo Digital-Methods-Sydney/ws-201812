@@ -1,11 +1,13 @@
-# Part of this code is from:
-# Robinson, J. S. D. (2017). Text mining with R: A tidy approach. 
-# Sebastopol, CA: O’Reilly.
+## ---- tidy_df2 ----
 
 # Gutenberg Project books
-table(g_books$title)
+kable(table(g_books$title), format = 'html')
 
+## ---- tidy_df3 ----
+
+library(tidytext)
 library(stringr)
+
 # divide into documents, each representing one chapter
 reg <- regex("^chapter ", ignore_case = TRUE)
 by_chapter <- g_books %>%
@@ -16,6 +18,8 @@ by_chapter <- g_books %>%
   group_by(gutenberg_id, title, chapter) %>%
   summarize(text = paste(text, collapse = " "))
 
+## ---- tidy_df4 ----
+
 reg <- "\\S+" # counting all sequences on non-space characters
 by_chapter %>% 
   group_by(title, chapter) %>%
@@ -25,7 +29,8 @@ by_chapter %>%
   summarize(n_chapters = n(),
             avg_words_by_chapter = mean(words_by_chapter))
 
-library(tidytext)
+## ---- tidy_df5 ----
+
 # split into words
 by_chapter_word <- by_chapter %>%
   unnest_tokens(word, text)
@@ -34,6 +39,8 @@ by_chapter_bigram <- by_chapter %>%
   unnest_tokens(bigram, text, 
                 token = "ngrams", n = 2)
 
+## ---- tidy_df6 ----
+
 # find document-word counts
 word_counts <- by_chapter_word %>%
   anti_join(stop_words) %>%
@@ -41,6 +48,8 @@ word_counts <- by_chapter_word %>%
   filter(!is.na(word)) %>%
   count(title, word, sort = TRUE) %>%
   ungroup()
+
+## ---- tidy_df7 ----
 
 word_counts %>% 
   group_by(title) %>%
@@ -53,6 +62,8 @@ word_counts %>%
   labs(y = "10 most frequent words",
        x = NULL) +
   coord_flip()
+
+## ---- tidy_df8 ----
 
 by_chapter_bigram$bigram <- 
   str_replace_all(by_chapter_bigram$bigram, "_|'s", "")
@@ -69,11 +80,14 @@ by_chapter_bigram_sep <-
   filter(!word2 %in% stop_words$word &
            !str_detect(word2, "[0-9]"))
 
+
 bigram_counts <- by_chapter_bigram_sep %>%
   count(word1, word2, sort = TRUE)
 
 bigram_counts <- bigram_counts %>%
   unite(bigram, word1, word2, sep = " ")
+
+## ---- tidy_df10 ----
 
 bigram_counts %>% 
   group_by(title) %>%
@@ -86,3 +100,5 @@ bigram_counts %>%
   labs(y = "10 most frequent bigrams by book",
        x = NULL) +
   coord_flip()
+
+# Code modified from Julia Silge & Robinson, 2017.

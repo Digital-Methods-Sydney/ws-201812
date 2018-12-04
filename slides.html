@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 
 # Topic models in R
 ### Francesco Bailo (<a href="mailto:francesco.bailo@sydney.edu.au">francesco.bailo@sydney.edu.au</a>)
-### 5 December 2018 (updated: 04 December 2018)
+### 5 December 2018 (updated: 05 December 2018)
 
 ---
 
@@ -236,6 +236,8 @@ iris %&gt;%
 2. Tidy your data
 3. Model your data
 4. Present your results
+
+&lt;div align = 'center'&gt;&lt;img src='img/workflow.svg'&gt;&lt;/div&gt;
 
 ---
 
@@ -562,12 +564,220 @@ titles &lt;- c("Twenty Thousand Leagues under the Sea",
 g_books &lt;-
   gutenberg_works(title %in% titles) %&gt;%
   gutenberg_download(meta_fields = "title")
+
+save(g_books, file = 'data/rdata/g_books.RData')
 ```
 
 ---
 
+# Tidying
 
 
+
+
+```r
+read_chunk("script/02-tidying/tidy_df.R")
+```
+
+
+```r
+library(tidyverse)
+library(tidytext)
+
+class(texts_by_document)
+```
+
+```
+## [1] "character"
+```
+
+```r
+length(texts_by_document)
+```
+
+```
+## [1] 4
+```
+
+```r
+# Tidy text (from PDFs)
+tidy_df &lt;- 
+  tibble(doc = names(texts_by_document),
+         text = texts_by_document) %&gt;%
+  unnest_tokens(word, text) %&gt;%
+  filter(str_detect(word, "[a-z]+")) %&gt;%
+  count(word, sort = TRUE)
+
+# Code modified from Julia Silge &amp; Robinson, 2017.
+```
+
+---
+
+# Tidying
+
+
+
+
+```r
+read_chunk("script/02-tidying/tidy_gutenberg_books.R")
+```
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Var1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Freq &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Alice's Adventures in Wonderland &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3339 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Frankenstein; Or, The Modern Prometheus &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7244 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Pride and Prejudice &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13030 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Twenty Thousand Leagues under the Sea &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12135 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+---
+
+# Tidying
+
+
+```r
+library(tidytext)
+library(stringr)
+
+# divide into documents, each representing one chapter
+reg &lt;- regex("^chapter ", ignore_case = TRUE)
+by_chapter &lt;- g_books %&gt;%
+  group_by(title) %&gt;%
+  mutate(chapter = cumsum(str_detect(text, reg))) %&gt;%
+  filter(chapter &gt; 0) %&gt;%
+  ungroup() %&gt;%
+  group_by(gutenberg_id, title, chapter) %&gt;%
+  summarize(text = paste(text, collapse = " "))
+```
+
+---
+
+# Tidying
+
+
+```r
+reg &lt;- "\\S+" # counting all sequences on non-space characters
+by_chapter %&gt;% 
+  group_by(title, chapter) %&gt;%
+  summarize(words_by_chapter = str_count(paste(text, collapse = " "), reg)) %&gt;%
+  ungroup() %&gt;%
+  group_by(title) %&gt;%
+  summarize(n_chapters = n(),
+            avg_words_by_chapter = mean(words_by_chapter))
+```
+
+```
+## # A tibble: 4 x 3
+##   title                                   n_chapters avg_words_by_chapter
+##   &lt;chr&gt;                                        &lt;int&gt;                &lt;dbl&gt;
+## 1 Alice's Adventures in Wonderland                12                2203.
+## 2 Frankenstein; Or, The Modern Prometheus         24                2892.
+## 3 Pride and Prejudice                             61                1993.
+## 4 Twenty Thousand Leagues under the Sea           46                2239
+```
+
+---
+
+# Tidying
+
+
+```r
+# split into words
+by_chapter_word &lt;- by_chapter %&gt;%
+  unnest_tokens(word, text)
+
+by_chapter_bigram &lt;- by_chapter %&gt;%
+  unnest_tokens(bigram, text, 
+                token = "ngrams", n = 2)
+```
+
+---
+
+# Summarising 
+
+
+```r
+# find document-word counts
+word_counts &lt;- by_chapter_word %&gt;%
+  anti_join(stop_words) %&gt;%
+  mutate(word = str_extract(word, "[a-z']+")) %&gt;%
+  filter(!is.na(word)) %&gt;%
+  count(title, word, sort = TRUE) %&gt;%
+  ungroup()
+```
+
+```
+## Joining, by = "word"
+```
+
+---
+
+# Summarising
+
+![](slides_files/figure-html/tidy_df7-1.svg)&lt;!-- --&gt;
+
+---
+
+# Summarising
+
+
+```r
+by_chapter_bigram$bigram &lt;- 
+  str_replace_all(by_chapter_bigram$bigram, "_|'s", "")
+bigram_counts &lt;- by_chapter_bigram %&gt;%
+  count(title, bigram, sort = TRUE) %&gt;%
+  ungroup()
+
+# Some extra cleaning
+by_chapter_bigram_sep &lt;- 
+  by_chapter_bigram %&gt;%
+  separate(bigram, c("word1", "word2"), sep = " ") %&gt;%
+  filter(!word1 %in% stop_words$word &amp;
+           !str_detect(word1, "[0-9]")) %&gt;%
+  filter(!word2 %in% stop_words$word &amp;
+           !str_detect(word2, "[0-9]"))
+
+
+bigram_counts &lt;- by_chapter_bigram_sep %&gt;%
+  count(word1, word2, sort = TRUE)
+
+bigram_counts &lt;- bigram_counts %&gt;%
+  unite(bigram, word1, word2, sep = " ")
+```
+
+---
+
+# Summarising
+
+![](slides_files/figure-html/tidy_df10-1.svg)&lt;!-- --&gt;
+
+---
+
+# Hands-on 
+
+Using these functions, summarise the most frequent words in a book of you choice. 
+
+* `gutenberg_download()` (find a book here: [gutenberg.org/browse/scores/top](https://www.gutenberg.org/browse/scores/top))
 
 ---
 

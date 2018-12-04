@@ -25,6 +25,8 @@ options(htmltools.dir.version = FALSE)
 library(tidyverse)
 library(kableExtra)
 library(knitr)
+library(ggplot2)
+theme_set(theme_bw())
 ```
 
 ---
@@ -138,6 +140,8 @@ knitr::include_graphics('img/magritte-pipe.svg')
 2. Tidy your data
 3. Model your data
 4. Present your results
+
+<div align = 'center'><img src='img/workflow.svg'></div>
 
 ---
 
@@ -303,8 +307,101 @@ read_chunk("script/01-importing/import_api.R")
 
 ---
 
+# Tidying
+
+```{r, echo=FALSE}
+source("script/01-importing/import_pdf.R")
+```
+
+```{r}
+read_chunk("script/02-tidying/tidy_df.R")
+```
+
+```{r tidy_df1}
+
+```
+
+---
+
+# Tidying
+
+```{r, echo=FALSE}
+load('data/rdata/g_books.RData')
+```
+
+```{r}
+read_chunk("script/02-tidying/tidy_gutenberg_books.R")
+```
+
+```{r tidy_df2, echo = FALSE}
+
+```
 
 
+---
+
+# Tidying
+
+```{r tidy_df3}
+
+```
+
+---
+
+# Tidying
+
+```{r tidy_df4}
+
+```
+
+---
+
+# Tidying
+
+```{r tidy_df5}
+
+```
+
+---
+
+# Summarising 
+
+```{r tidy_df6}
+
+```
+
+---
+
+# Summarising
+
+```{r tidy_df7, echo = FALSE, fig.width=8, fig.height=5.5, fig.fullwidth=TRUE, dev='svg'}
+
+```
+
+---
+
+# Summarising
+
+```{r tidy_df8}
+
+```
+
+---
+
+# Summarising
+
+```{r tidy_df10, echo = FALSE, fig.width=8, fig.height=5.5, fig.fullwidth=TRUE, dev='svg'}
+
+```
+
+---
+
+# Hands-on 
+
+Using these functions, summarise the most frequent words/biwords in a book of you choice. 
+
+* `gutenberg_download()` (find a book here: [gutenberg.org/browse/scores/top](https://www.gutenberg.org/browse/scores/top))
+* ``
 
 ---
 
