@@ -398,27 +398,54 @@ read_chunk("script/02-tidying/tidy_gutenberg_books.R")
 
 # Hands-on 
 
-Using these functions, summarise the most frequent words/biwords in a book of you choice. 
+Using these functions, summarise the most frequent words/biwords in a book or speech of you choice. 
 
-* `gutenberg_download()` (find a book here: [gutenberg.org/browse/scores/top](https://www.gutenberg.org/browse/scores/top))
-* ``
+**Import a book** with `gutenberg_works()`; `gutenberg_download()` (find a book here: [gutenberg.org/browse/scores/top](https://www.gutenberg.org/browse/scores/top))
 
----
+**(Advanced) Import a presidential speech with** `html_read()` (find a speech here: [millercenter.org/the-presidency/presidential-speeches](https://millercenter.org/the-presidency/presidential-speeches)); `html_node()`; `html_text()`; `tibble() or data.frame()` (since you'll need to store your text in a data frame)
 
-# Preparing
+**Tidy your text with** `group_by()` (if you have more than one document); `anti_join(stop_words)`; `unnest_tokens()`
 
----
-
-# Modelling
+**Count your words with** `count()`
 
 ---
 
-# Evaluating
+# Document-term matrix
+
+```{r}
+
+data <- 
+  tibble(text = c(  
+    "pollution water environment jobs","healthcare doctors hospitals pollution",
+    "smog environment water doctors","unemployment jobs wages immigration", 
+    "hospitals drugs doctors visa","healthcare drugs doctors wages",
+    "jobs wages unemployment healthcare","hospitals drugs doctors citizenship",
+    "environment smog water economy", "foreigners immigration citizenship doctors",
+    "immigration visa foreigners jobs", "economy wages jobs healthcare",
+    "citizenship immigration foreigners drugs"),
+    author = c("Sam", "Rosy", "Tom", "Alice", "Bob", "Carol", "Diana", 
+               "Zach", "Yolie","Xavi", "Ahmad", "Ali", "Nemat")) 
+dfm <- 
+  data %>%
+  unnest_tokens(word, text) %>%
+  count(author, word, sort = TRUE) %>%
+  cast_dfm(author, word, n)
+```
 
 ---
 
-# Visualising
+# Document-term matrix
+
+```{r, echo = FALSE}
+kable(dfm[,1:8])
+```
+
 
 ---
 
-# Reporting
+# Topic models
+
+> A topic is defined as a mixture over words where each word has a probability
+of belonging to a topic (Roberts, Stewart, & Tingley, forthcoming).
+
+
