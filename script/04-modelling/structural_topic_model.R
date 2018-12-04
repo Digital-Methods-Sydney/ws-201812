@@ -7,6 +7,15 @@ model <-
   stm(books_dfm, K = 4, 
       verbose = FALSE, init.type = "Spectral")
 
+# Show most significant words by topic
+labelTopics(model, 1:4)
+
+# Show proportion by topic
+plot(model, type = "summary")
+
+# Cloud for a topic
+cloud(model, topic = 1, scale = c(2,.25))
+
 tidy_topics_word_topic <-
   tidy(model)
 
@@ -49,5 +58,9 @@ ggplot(spread_topics_doc_topic, aes(x=x,y=y,colour=title)) +
 
 # Bonus
 
+poliblogPrevFit <- stm(documents = out$documents, vocab = out$vocab,
+                       + K = 20, prevalence =~ rating + s(day),
+                       + max.em.its = 75, data = out$meta,
+                       + init.type = "Spectral")
 
 

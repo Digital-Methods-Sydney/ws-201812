@@ -1,6 +1,6 @@
 ## ---- document_term_matrix ----
 
-library(tidyverse)
+library(tidytext)
 library(tidyverse)
 
 load('data/rdata/g_books.RData')

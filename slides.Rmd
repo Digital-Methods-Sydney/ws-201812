@@ -445,7 +445,18 @@ kable(dfm[,1:8])
 
 # Topic models
 
-> A topic is defined as a mixture over words where each word has a probability
-of belonging to a topic (Roberts, Stewart, & Tingley, forthcoming).
+> A **topic** is defined as a mixture over words where each word has a probability of belonging to a topic.
+
+> A **document** is a mixture over topics, meaning that a single document can be composed of multiple topics. 
+
+> As such, the sum of the topic proportions across all topics for a document is one, and the sum word probabilities for a given topic is one (Roberts, Stewart, & Tingley, forthcoming).
+
+---
 
 
+---
+
+# Topic models: the stm package
+
+* `selectModel()`, see `?semanticCoherence` and `?exclusivity`
+* `searchK()`
