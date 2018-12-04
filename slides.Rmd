@@ -143,7 +143,9 @@ knitr::include_graphics('img/magritte-pipe.svg')
 
 # Importing
 
-Let's first import some textual data into R from PDFs, webpages and XML documents and an API.
+Let's first import some textual data into R from PDFs, webpages, XML documents and an API.
+
+<div align = 'center'><img src="img/import-fail.gif" width = '120%'></div>
 
 ---
 
@@ -212,7 +214,17 @@ read_chunk("script/01-importing/import_html.R", from = 1, to = 18)
 
 # Hands-on
 
-Visit this page: [imdb.com/title/tt0057012/](https://imdb.com/title/tt0057012/)
+Visit this page: [imdb.com/title/tt0057012/](https://imdb.com/title/tt0057012/) and try to parse this `summary_text` with XPath.
+
+<div align = 'center'><img src="img/imdb.png" width="35%"></div>
+
+You will only need three functions: `read_html()`, `html_node()` and `html_text()` (and optionally `str_trim()`).
+
+* Firefox: Right-click and *Inspect Element*
+* Chrome: Right-click and *Inspect*
+* Safari: 
+  1. Enable "Show Developer Menu" in Safari's Preferences, *Advanced tab*.
+  2. Right-click and *Inspect Element*
 
 ---
 
@@ -222,7 +234,15 @@ Visit this page: [imdb.com/title/tt0057012/](https://imdb.com/title/tt0057012/)
 read_chunk("script/01-importing/import_xml.R")
 ```
 
-```{r import_xml, eval = FALSE}
+```{r import_xml1, eval = FALSE}
+
+```
+
+---
+
+# Import XML
+
+```{r import_xml2, eval = FALSE}
 
 ```
 
@@ -269,13 +289,22 @@ http://en.wikipedia.org/w/api.php?action=query&format=json&prop=revisions&rvprop
 read_chunk("script/01-importing/import_api.R")
 ```
 
-```{r import_api, eval = FALSE}
+```{r import_api1, eval = TRUE, message = FALSE, cache = TRUE}
 
 ```
 
 ---
 
-# Cleaning
+# Import API
+
+```{r import_api2, eval = FALSE}
+
+```
+
+---
+
+
+
 
 ---
 

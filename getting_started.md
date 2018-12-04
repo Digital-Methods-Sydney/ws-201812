@@ -24,15 +24,16 @@ Move the `ws-201812-master.zip` archive somewhere on your computer (like
 on your desktop) and open it. You should now have a folder containing a
 number of files and folders:
 
-    ##  [1] "_config.yml"           "data"                 
-    ##  [3] "footer.css"            "getting_started.md"   
-    ##  [5] "getting_started.Rmd"   "img"                  
-    ##  [7] "libs"                  "LICENSE"              
-    ##  [9] "README.md"             "script"               
-    ## [11] "slides_files"          "slides_original_files"
-    ## [13] "slides_original.html"  "slides_original.Rmd"  
-    ## [15] "slides.html"           "slides.Rmd"           
-    ## [17] "ws-201812.Rproj"
+    ##  [1] "_config.yml"           "assets"               
+    ##  [3] "data"                  "footer.css"           
+    ##  [5] "getting_started.md"    "getting_started.Rmd"  
+    ##  [7] "img"                   "libs"                 
+    ##  [9] "LICENSE"               "README.md"            
+    ## [11] "script"                "slides_files"         
+    ## [13] "slides_original_files" "slides_original.html" 
+    ## [15] "slides_original.Rmd"   "slides.html"          
+    ## [17] "slides.Rmd"            "welcome-page.md"      
+    ## [19] "ws-201812.Rproj"
 
 Double-click on the file `ws-201812.Rproj`; it should open in RStudio.
 If this doesn’t work, go to RStudio, and “File” → “Open project…” and
@@ -65,12 +66,12 @@ these two chunks of code:
 ``` r
 ws_packages <- 
   c('stm', 'tidyverse', 'tidytext', 'tidytext',
-    'xml2', 'pdftools', 'stringr', 'aRxiv',
-    'gutenbergr')
+    'xml2', 'pdftools', 'stringr',
+    'gutenbergr', 'jsonlite')
 ```
 
 ``` r
-install.packages(ws_packages, dependencies = TRUE)
+install.packages(ws_packages)
 ```
 
 To run the code, just copy-paste the code into your RStudio **CONSOLE**
@@ -90,7 +91,7 @@ lapply(ws_packages, require, character.only = TRUE)
 
     ## Loading required package: tidyverse
 
-    ## ── Attaching packages ─────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
+    ## ── Attaching packages ──────────────────────────────────────────── tidyverse 1.2.1 ──
 
     ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
     ## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
@@ -99,7 +100,7 @@ lapply(ws_packages, require, character.only = TRUE)
 
     ## Warning: package 'dplyr' was built under R version 3.5.1
 
-    ## ── Conflicts ────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ── Conflicts ─────────────────────────────────────────────── tidyverse_conflicts() ──
     ## ✖ dplyr::filter() masks stats::filter()
     ## ✖ dplyr::lag()    masks stats::lag()
 
@@ -109,9 +110,16 @@ lapply(ws_packages, require, character.only = TRUE)
 
     ## Loading required package: pdftools
 
-    ## Loading required package: aRxiv
-
     ## Loading required package: gutenbergr
+
+    ## Loading required package: jsonlite
+
+    ## 
+    ## Attaching package: 'jsonlite'
+
+    ## The following object is masked from 'package:purrr':
+    ## 
+    ##     flatten
 
     ## [[1]]
     ## [1] TRUE

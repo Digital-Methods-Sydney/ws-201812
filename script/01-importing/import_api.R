@@ -1,18 +1,23 @@
-## ---- import_api ----
+## ---- import_api1 ----
+
+## Wikipedia API
+library(jsonlite)
+res <- 
+  fromJSON('http://en.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza')
+
+cat(res[["query"]][["pages"]][["24768"]][["revisions"]][["*"]])
+
+## ---- import_api2 ----
 
 library(tidyverse)
 
-# This package provides an interface to the arXiv API (see https://arxiv.org/help/api/index)
-library(aRxiv)
-res <- 
-  arxiv_search("topic models", limit = 100)
-
-# This package provides an interface to the arXiv API (see https://arxiv.org/help/api/index)
+# This package provides an interface to the Project Gutenberg
 library(gutenbergr)
 
 ## This won't download the actual book but the metadata
 res <-
   gutenberg_works(author == "Dick, Philip K.")
+
 ## This will download the book data
 g_books <-
   gutenberg_download(res$gutenberg_id, meta_fields = 'title')
@@ -26,11 +31,7 @@ g_books <-
   gutenberg_works(title %in% titles) %>%
   gutenberg_download(meta_fields = "title")
 
-## Wikipedia API
-library(jsonlite)
-res <- 
-  fromJSON('http://en.wikipedia.org/w/api.php?format=json&action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza')
-
+## ---- import_api3 ----
 
 ## BONUS: Word-cloud
 library(tidyverse)

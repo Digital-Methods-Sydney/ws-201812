@@ -1,4 +1,4 @@
-## ---- import_xml ----
+## ---- import_xml1 ----
 
 library(xml2) 
 library(tidyverse)
@@ -16,6 +16,8 @@ place_names <-
   xml_find_all(doc, 
                ".//d1:placeName")
 
+## ---- import_xml2 ----
+
 # Extract attributes and names
 place_names.df <-
   data.frame(ref = xml_attr(place_names, "ref"),
@@ -24,6 +26,8 @@ place_names.df <-
 place_names.df <- 
   place_names.df %>% group_by(ref, name) %>% 
   summarize(citations = n())
+
+## ---- import_xml3 ----
 
 # Enrich -- BONUS Linked data + SPARQL query
 place_names.df$class <- NA
