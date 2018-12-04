@@ -453,6 +453,15 @@ kable(dfm[,1:8])
 
 ---
 
+# Topic models
+
+```{r}
+read_chunk("script/04-modelling/structural_topic_model.R")
+```
+
+```{r structural_topic_model1, echo = TRUE, eval = FALSE}
+
+```
 
 ---
 

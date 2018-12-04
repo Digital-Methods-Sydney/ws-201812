@@ -1,4 +1,4 @@
-## --- structural_topic_model ---
+## --- structural_topic_model1 ---
 
 library(stm)
 
@@ -6,6 +6,8 @@ library(stm)
 model <- 
   stm(books_dfm, K = 4, 
       verbose = FALSE, init.type = "Spectral")
+
+## --- structural_topic_model2 ---
 
 # Show most significant words by topic
 labelTopics(model, 1:4)

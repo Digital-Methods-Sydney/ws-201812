@@ -979,8 +979,29 @@ dfm &lt;-
 
 # Topic models
 
-&gt; A topic is defined as a mixture over words where each word has a probability
-of belonging to a topic (Roberts, Stewart, &amp; Tingley, forthcoming).
+&gt; A **topic** is defined as a mixture over words where each word has a probability of belonging to a topic.
+
+&gt; A **document** is a mixture over topics, meaning that a single document can be composed of multiple topics. 
+
+&gt; As such, the sum of the topic proportions across all topics for a document is one, and the sum word probabilities for a given topic is one (Roberts, Stewart, &amp; Tingley, forthcoming).
+
+---
+
+# Topic models
+
+
+```r
+read_chunk("script/04-modelling/structural_topic_model.R")
+```
+
+
+
+---
+
+# Topic models: the stm package
+
+* `selectModel()`, see `?semanticCoherence` and `?exclusivity`
+* `searchK()`
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
